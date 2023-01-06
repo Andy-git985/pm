@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Drawer, ListItem, ListItemText, Button } from '@mui/material';
-import { users, notes } from '../user';
+import { users, notes } from '../data';
 
 import { Box, AppBar, Toolbar, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';

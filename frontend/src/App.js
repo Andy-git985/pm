@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { users, notes } from './user';
+import { users, notes } from './data';
 import DrawerMenu from './components/DrawerMenu';
 import Searchbar from './components/Searchbar';
 
