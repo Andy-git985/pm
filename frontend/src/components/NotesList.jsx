@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { List, ListItem, ListItemText } from '@mui/material';
+import { Divider, List, ListItem, ListItemText } from '@mui/material';
 
 const NotesList = () => {
   const notes = useSelector(({ notes }) => notes);
@@ -7,9 +7,12 @@ const NotesList = () => {
     <>
       <List>
         {notes.map((note) => (
-          <ListItem>
-            <ListItemText primary={note.content} />
-          </ListItem>
+          <div key={note.id}>
+            <ListItem>
+              <ListItemText primary={note.content} />
+            </ListItem>
+            <Divider />
+          </div>
         ))}
       </List>
     </>
