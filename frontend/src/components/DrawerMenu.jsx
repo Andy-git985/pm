@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Drawer, ListItem, ListItemText, Button } from '@mui/material';
+import { Divider, Drawer, ListItem, ListItemText, Button } from '@mui/material';
 import { users, notes } from '../data';
 
 import { Box, AppBar, Toolbar, IconButton } from '@mui/material';
@@ -10,10 +10,13 @@ const DrawerMenu = () => {
 
   const getList = () => (
     <div onClick={() => setOpen(false)}>
-      {notes.map((item, index) => (
-        <ListItem key={index}>
-          <ListItemText primary={item.folder} />
-        </ListItem>
+      {notes.map((item) => (
+        <div key={item.id}>
+          <ListItem>
+            <ListItemText primary={item.folder} />
+          </ListItem>
+          <Divider />
+        </div>
       ))}
     </div>
   );
