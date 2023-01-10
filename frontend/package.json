@@ -15,6 +15,7 @@
     "react": "^18.2.0",
     "react-autosave": "^0.4.2",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.41.5",
     "react-redux": "^8.0.5",
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
