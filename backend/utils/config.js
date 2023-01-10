@@ -11,5 +11,7 @@ const MONGODB_URI =
     : process.env.MONGODB_URI;
 
 module.exports = {
+  CLIENT_URL,
   PORT,
+  MONGODB_URI,
 };

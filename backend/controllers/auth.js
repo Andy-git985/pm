@@ -3,7 +3,31 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const config = require('../utils/config');
-const User = require('../models/user');
+const User = require('../models/User.js');
+
+// authRouter.post(
+//   '/register',
+//   passport.authenticate('jwt', { session: false }),
+//   function (req, res) {
+//     console.log('request', req.body);
+//     res.send(req.user.profile);
+//   }
+// );
+
+// authRouter.post('/register', async (request, response) => {
+//   const { firstName, lastName, email } = request.body;
+//   const user = new User({
+//     firstName,
+//     lastName,
+//     displayName: `${firstName} ${lastName}`,
+//     email,
+//     provider: null,
+//     providerId: null,
+//     passwordHash: null,
+//   });
+//   await user.save();
+//   response.status(200).json({ message: 'registered' });
+// });
 
 authRouter.post('/login', async (request, response) => {
   const { username, password } = request.body;

@@ -7,6 +7,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import authServices from '../services/auth';
 
 const Register = () => {
   const {
@@ -22,8 +23,10 @@ const Register = () => {
       password: '',
     },
   });
-  const onSubmit = (data) => {
-    console.log(data);
+
+  const onSubmit = async (data) => {
+    const response = await authServices.register(data);
+    console.log(response);
   };
 
   return (

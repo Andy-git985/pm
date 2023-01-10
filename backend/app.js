@@ -35,7 +35,7 @@ app.use(express.json());
 app.use(middleware.requestLogger);
 
 app.use('/auth', authRouter);
-app.use(middleware.tokenExtractor);
-app.use('/api/notes', middleware.userExtractor, notesRouter);
+// app.use(middleware.tokenExtractor);
+// app.use('/api/notes', middleware.userExtractor, notesRouter);
 
 module.exports = app;
