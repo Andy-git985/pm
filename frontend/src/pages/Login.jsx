@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import authServices from '../services/auth';
+import authServices from '../services/user';
 import Google from '../img/google.png';
 
 const Login = () => {

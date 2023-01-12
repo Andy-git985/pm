@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import authServices from '../services/auth';
+import authServices from '../services/user';
 
 const Register = () => {
   const [user, setUser] = useState(null);
