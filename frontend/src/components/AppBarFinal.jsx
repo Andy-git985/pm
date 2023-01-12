@@ -19,7 +19,12 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 const AppBarFinal = () => {
+  const user = useSelector(({ user }) => user);
+
   const [filter, setFilter] = useState('');
 
   const handleFilterChange = (event) => {
@@ -52,6 +57,7 @@ const AppBarFinal = () => {
     handleMobileMenuClose();
   };
 
+  // Account menu options
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -162,10 +168,16 @@ const AppBarFinal = () => {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              // onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              {user.loggedIn ? (
+                <AccountCircle />
+              ) : (
+                <Link to="/user/login">
+                  <AccountCircle />
+                </Link>
+              )}
             </IconButton>
           </Box>
 

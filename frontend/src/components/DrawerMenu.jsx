@@ -9,7 +9,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 const DrawerMenu = () => {
   const [open, setOpen] = useState(false);
   const notes = useSelector(({ notes }) => notes);
-  console.log('drawer', notes);
 
   const getList = () => (
     <div onClick={() => setOpen(false)}>
