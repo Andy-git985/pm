@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import {
   Box,
@@ -90,6 +91,11 @@ const Login = () => {
             borderRadius: '50%',
           }}
         ></img>
+        <Link to="/user/register">
+          <Typography component="h1">
+            Don't have an account? Sign up!
+          </Typography>
+        </Link>
       </Paper>
     </Container>
   );
