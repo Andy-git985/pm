@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import {
   Box,
@@ -10,6 +11,7 @@ import {
 import authServices from '../services/auth';
 
 const Register = () => {
+  const [user, setUser] = useState(null);
   const {
     control,
     register,
@@ -17,16 +19,16 @@ const Register = () => {
     reset,
     formState,
     formState: { isSubmitSuccessful },
-  } = useForm({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-  });
+  } = useForm({});
+  //   defaultValues: {
+  //   email: '',
+  //   password: '',
+  // },
 
   const onSubmit = async (data) => {
-    const response = await authServices.register(data);
-    console.log(response);
+    const user = await authServices.register(data);
+    console.log('register frontend', user);
+    setUser(user.username);
   };
 
   return (
@@ -39,6 +41,7 @@ const Register = () => {
       }}
     >
       <Paper elevation={3}>
+        <div>{user}</div>
         <Typography component="h1">Register</Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box

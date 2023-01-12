@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import {
   Box,
@@ -7,9 +8,12 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import authServices from '../services/auth';
 import Google from '../img/google.png';
 
 const Login = () => {
+  const [user, setUser] = useState('');
+
   const {
     control,
     register,
@@ -23,8 +27,9 @@ const Login = () => {
       password: '',
     },
   });
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const user = await authServices.login(data);
+    setUser(user);
   };
 
   return (
@@ -47,6 +52,7 @@ const Login = () => {
           padding: '5px',
         }}
       >
+        <div>{user.displayName}</div>
         <Typography component="h1">Log In</Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box
