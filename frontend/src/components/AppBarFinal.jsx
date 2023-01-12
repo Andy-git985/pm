@@ -9,6 +9,7 @@ import {
   Toolbar,
   IconButton,
   TextField,
+  Button,
 } from '@mui/material';
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -19,11 +20,17 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { logout } from '../reducers/userReducer';
 
 const AppBarFinal = () => {
   const user = useSelector(({ user }) => user);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   const [filter, setFilter] = useState('');
 
@@ -160,6 +167,8 @@ const AppBarFinal = () => {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
+
+            {user.loggedIn && <Button onClick={handleLogout}>Log out</Button>}
 
             {/* Accounts */}
             <IconButton
