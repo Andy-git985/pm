@@ -2,10 +2,10 @@ POST http://localhost:3001/user/register
 Content-Type: application/json
 
 {
-  "firstName": "User",
-  "lastName": "Three",
-  "email": "userThree@gmail",
-  "password": "password"
+  "firstName": "The Fourth",
+  "lastName": "User",
+  "email": "numberFour@aol.com",
+  "password": "notThisPasswordAgain"
 }
 
 ###
@@ -13,6 +13,6 @@ POST http://localhost:3001/user/login
 Content-Type: application/json
 
 {
-  "email": "userThree@gmail",
-  "password": "password"
+  "email": "numberFour@aol.com",
+  "password": "notThisPasswordAgain"
 }
