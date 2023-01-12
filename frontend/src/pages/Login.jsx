@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import authServices from '../services/user';
+import userServices from '../services/user';
 import Google from '../img/google.png';
 
 const Login = () => {
@@ -29,8 +29,14 @@ const Login = () => {
     },
   });
   const onSubmit = async (data) => {
-    const user = await authServices.login(data);
+    const user = await userServices.login(data);
     setUser(user);
+  };
+
+  const googleLogin = async () => {
+    const url = await userServices.getLoginUrl();
+    console.log(url);
+    window.open(url, '_self');
   };
 
   return (
@@ -81,16 +87,18 @@ const Login = () => {
             </Button>
           </Box>
         </form>
-        <img
-          src={Google}
-          alt="google-logo"
-          style={{
-            backgroundColor: 'black',
-            width: '35px',
-            padding: '5px',
-            borderRadius: '50%',
-          }}
-        ></img>
+        <Button onClick={googleLogin}>
+          <img
+            src={Google}
+            alt="google-logo"
+            style={{
+              backgroundColor: 'black',
+              width: '35px',
+              padding: '5px',
+              borderRadius: '50%',
+            }}
+          ></img>
+        </Button>
         <Link to="/user/register">
           <Typography component="h1">
             Don't have an account? Sign up!

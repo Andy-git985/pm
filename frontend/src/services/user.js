@@ -2,7 +2,7 @@ import axios from 'axios';
 const baseUrl = '/user';
 
 const getLoginUrl = async () => {
-  const response = await axios.get('/auth/login');
+  const response = await axios.get('/auth/google/');
   return response.data.url;
 };
 

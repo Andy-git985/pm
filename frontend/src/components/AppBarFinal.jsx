@@ -10,6 +10,7 @@ import {
   IconButton,
   TextField,
   Button,
+  Typography,
 } from '@mui/material';
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -144,7 +145,12 @@ const AppBarFinal = () => {
           <DrawerMenu />
           <Searchbar filter={filter} handleFilterChange={handleFilterChange} />
           {/* Start */}
-          <Box sx={{ flexGrow: 1, outline: '1px solid red' }} />
+          <Box sx={{ flexGrow: 1, outline: '1px solid red' }}>
+            {user.loggedIn && (
+              <Typography component="h1">{user.displayName}</Typography>
+            )}
+            {user.loggedIn && <Button onClick={handleLogout}>Log out</Button>}
+          </Box>
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             {/* Mail */}
             <IconButton
@@ -167,8 +173,6 @@ const AppBarFinal = () => {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-
-            {user.loggedIn && <Button onClick={handleLogout}>Log out</Button>}
 
             {/* Accounts */}
             <IconButton

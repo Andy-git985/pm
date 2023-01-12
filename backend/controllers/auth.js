@@ -3,13 +3,14 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../utils/config');
 
-authRouter.get('/google/login', (request, response) => {
+authRouter.get('/google', (request, response) => {
+  console.log('auth login route');
   response.status(200).json({ url: config.CALLBACK_URL });
 });
 
 authRouter.get(
   '/google',
-  passport.authenticate('google', { scope: ['profile'] })
+  passport.authenticate('google', { scope: ['profile', 'scope'] })
 );
 
 authRouter.get(
