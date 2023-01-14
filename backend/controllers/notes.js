@@ -8,9 +8,9 @@ notesRouter.get('/', async (request, response) => {
   response.json(notes);
 });
 
-notesRouter.post('/', async (req, res) => {
+notesRouter.post('/', async (request, response) => {
   const { title, content, folder, dueDate, priority, progress, files } =
-    req.body;
+    request.body;
   const note = new Note({
     title,
     content,
@@ -22,6 +22,7 @@ notesRouter.post('/', async (req, res) => {
     createdAt: new Date(),
   });
   await note.save();
+  console.log('new note', note);
   response.status(201).json(note);
 });
 

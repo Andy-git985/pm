@@ -35,7 +35,7 @@ const NoteForm = () => {
       title: '',
       content: '',
       folder: '',
-      dueDate: '',
+      dueDate: null,
       priority: '',
       files: [],
     },
@@ -57,28 +57,18 @@ const NoteForm = () => {
   return (
     <div>
       <h2>Create a new note</h2>
-
-      {/* 
-      title: textfield
-      content: textfield
-      folder: select
-      date: date picker
-      priority: select
-      progress: select
-      files: upload
-      
-       */}
       <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form">
         <TextField label="Title" variant="standard" {...register('title')} />
-        <TextareaAutosize
-          maxRows={4}
-          aria-label="maximum height"
-          placeholder="Maximum 4 rows"
-          defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+        <div>
+          <TextareaAutosize
+            aria-label="maximum height"
+            placeholder="Maximum 4 rows"
+            defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua."
-          style={{ width: 200 }}
-          {...register('content')}
-        />
+            style={{ width: '100%', outline: 'none', resize: 'none' }}
+            {...register('content')}
+          />
+        </div>
         <Controller
           control={control}
           name="folder"

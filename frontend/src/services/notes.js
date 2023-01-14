@@ -9,6 +9,7 @@ const getAll = async () => {
 
 const createNew = async (content) => {
   const response = await axios.post(baseUrl, content);
+  console.log('services', response);
   return response.data;
 };
 

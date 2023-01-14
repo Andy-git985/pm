@@ -24,6 +24,7 @@ export const initializeNotes = () => {
 export const createNote = (note) => {
   return async (dispatch) => {
     const newNote = await noteService.createNew(note);
+    console.log('reducer', newNote);
     dispatch(appendNote(newNote));
   };
 };
