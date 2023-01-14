@@ -8,9 +8,9 @@ import Register from './pages/Register';
 
 const App = () => {
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(initializeNotes());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(initializeNotes());
+  }, [dispatch]);
 
   return (
     <BrowserRouter>

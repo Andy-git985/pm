@@ -21,9 +21,9 @@ export const initializeNotes = () => {
     dispatch(setNotes(notes));
   };
 };
-export const createNote = (content) => {
+export const createNote = (note) => {
   return async (dispatch) => {
-    const newNote = await noteService.createNew({ content });
+    const newNote = await noteService.createNew(note);
     dispatch(appendNote(newNote));
   };
 };

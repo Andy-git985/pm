@@ -39,6 +39,5 @@ app.use('/user', usersRouter);
 app.use('/auth', authRouter);
 app.use(middleware.tokenExtractor);
 app.use('/api/notes', middleware.userExtractor, notesRouter);
-app.use('/api/notes', notesRouter);
 
 module.exports = app;
