@@ -33,12 +33,12 @@ const AppBarFinal = () => {
     dispatch(logout());
   };
 
-  const [filter, setFilter] = useState('');
+  // const [filter, setFilter] = useState('');
 
-  const handleFilterChange = (event) => {
-    console.log(event.target.value);
-    setFilter(event.target.value);
-  };
+  // const handleFilterChange = (event) => {
+  //   console.log(event.target.value);
+  //   setFilter(event.target.value);
+  // };
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -143,7 +143,8 @@ const AppBarFinal = () => {
       <AppBar position="static">
         <Toolbar>
           <DrawerMenu />
-          <Searchbar filter={filter} handleFilterChange={handleFilterChange} />
+          {/* <Searchbar filter={filter} handleFilterChange={handleFilterChange} /> */}
+          <Searchbar />
           {/* Start */}
           <Box sx={{ flexGrow: 1, outline: '1px solid red' }}>
             {user.loggedIn && (

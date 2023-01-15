@@ -8,13 +8,33 @@ const ListItemContainer = styled('div')(() => ({
   cursor: 'pointer',
 }));
 
+const contains = (obj, value) => {
+  if (typeof obj === 'string' && obj.includes(value)) {
+    return true;
+  }
+  if (typeof obj === 'object') {
+  }
+  return false;
+};
+
 const NotesList = () => {
   const dispatch = useDispatch();
-  const folder = useSelector(({ filter }) => filter.notes);
-  console.log(folder);
+  // const folder = useSelector(({ filter }) => filter.notes);
+  const search = useSelector(({ filter }) => filter.notes);
+  const filter = useSelector(({ filter }) => filter.filterBy);
+  console.log('filter', filter);
   const notes = useSelector(({ notes }) => notes);
+  // const filteredNotes =
+  //   folder === 'All' ? notes : notes.filter((note) => note.folder === folder);
   const filteredNotes =
-    folder === 'All' ? notes : notes.filter((note) => note.folder === folder);
+    filter === 'folder'
+      ? notes.filter((note) => note.folder === search)
+      : filter === 'notes'
+      ? notes.filter((note) =>
+          Object.values(note).some((n) => contains(n, search))
+        )
+      : notes;
+  // notes.forEach((note) => Object.values(note).forEach((n) => console.log(n)));
 
   const handleClick = (id) => {
     dispatch(filterView(id));

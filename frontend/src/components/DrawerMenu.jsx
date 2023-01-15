@@ -6,7 +6,7 @@ import { Divider, Drawer, ListItem, ListItemText, Button } from '@mui/material';
 import { Box, AppBar, Toolbar, IconButton } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import MenuIcon from '@mui/icons-material/Menu';
-import { filterNotes } from '../reducers/filterReducer';
+import { filterNotes, setFilterBy } from '../reducers/filterReducer';
 
 const ListItemContainer = styled('div')(() => ({
   cursor: 'pointer',
@@ -17,14 +17,19 @@ const DrawerMenu = () => {
   const [open, setOpen] = useState(false);
   const notes = useSelector(({ notes }) => notes);
 
-  const handleClick = (folder) => {
+  const handleClickFolder = (folder) => {
+    dispatch(setFilterBy('folder'));
     dispatch(filterNotes(folder));
+  };
+
+  const handleClickAll = () => {
+    dispatch(setFilterBy(null));
   };
 
   const getList = () => (
     <div onClick={() => setOpen(false)}>
       <ListItemContainer>
-        <ListItem onClick={() => handleClick('All')}>
+        <ListItem onClick={handleClickAll}>
           <FolderIcon sx={{ marginRight: '5px' }} />
           <ListItemText primary={'All'} />
         </ListItem>
@@ -32,7 +37,7 @@ const DrawerMenu = () => {
       </ListItemContainer>
       {notes.map((note) => (
         <ListItemContainer key={note.id}>
-          <ListItem onClick={() => handleClick(note.folder)}>
+          <ListItem onClick={() => handleClickFolder(note.folder)}>
             <FolderIcon sx={{ marginRight: '5px' }} />
             <ListItemText primary={note.folder} />
           </ListItem>
