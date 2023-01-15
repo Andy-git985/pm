@@ -1,10 +1,18 @@
 import { Grid } from '@mui/material';
+import { useSelector } from 'react-redux';
 import AppBarFinal from '../components/AppBarFinal';
 import Bottom from '../components/Bottom';
 import NoteForm from '../components/NoteForm';
 import NotesList from '../components/NotesList';
 
 const Note = () => {
+  const view = useSelector(({ filter }) => filter.view);
+  const notes = useSelector(({ notes }) => notes);
+  const note =
+    view && view !== 'Note Form'
+      ? notes.find((note) => note.id === view)
+      : null;
+
   return (
     <>
       <AppBarFinal />
@@ -25,7 +33,14 @@ const Note = () => {
             padding: '2rem',
           }}
         >
-          <NoteForm />
+          {view === 'Note Form' && <NoteForm />}
+          {note && (
+            <>
+              <div>{note.title}</div>
+              <div>{note.content}</div>
+              <div>{note.folder}</div>
+            </>
+          )}
           <Bottom sx={{ marginTop: '25px' }} />
         </Grid>
       </Grid>

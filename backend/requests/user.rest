@@ -16,3 +16,7 @@ Content-Type: application/json
   "email": "numberFour@aol.com",
   "password": "notThisPasswordAgain"
 }
+
+###
+DELETE http://localhost:3001/api/notes/63c342a831c33fdb6c1818ec
+Content-Type: application/json

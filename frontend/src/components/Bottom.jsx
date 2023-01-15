@@ -1,18 +1,27 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { filterView } from '../reducers/filterReducer';
 
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import FolderIcon from '@mui/icons-material/Folder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { AppBar, Paper } from '@mui/material';
 
 const Bottom = () => {
   const [value, setValue] = useState('recents');
+  const dispatch = useDispatch();
 
   const handleChange = (newValue) => {
     setValue(newValue);
   };
+
+  const handleNewNote = () => {
+    dispatch(filterView('Note Form'));
+  };
+
   return (
     // <Paper
     //   sx={{
@@ -49,6 +58,12 @@ const Bottom = () => {
           label="Folder"
           value="folder"
           icon={<FolderIcon />}
+        />
+        <BottomNavigationAction
+          label="New"
+          value="newNote"
+          icon={<LibraryAddIcon />}
+          onClick={handleNewNote}
         />
       </BottomNavigation>
     </AppBar>
