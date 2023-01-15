@@ -3,10 +3,12 @@ import userService from '../services/user';
 
 const userToken = document.cookie ? userService.getToken('jwt') : null;
 const loggedIn = document.cookie ? true : false;
+const displayName = null;
 
 const initialState = {
   loggedIn,
   userToken,
+  displayName,
 };
 
 const userSlice = createSlice({

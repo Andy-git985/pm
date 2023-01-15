@@ -3,9 +3,10 @@ import { Divider, List, ListItem, ListItemText } from '@mui/material';
 
 const NotesList = () => {
   const notes = useSelector(({ notes }) => notes);
-  console.log(notes);
+  const user = useSelector(({ user }) => user);
   return (
     <>
+      <div>{user.displayName}</div>
       <List>
         {notes.map((note) => (
           <div key={note.id}>

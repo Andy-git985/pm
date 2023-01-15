@@ -48,7 +48,7 @@ usersRouter.post('/login', async (request, response) => {
 
   const token = jwtToken.create(existingUser);
 
-  response.cookie('jwt', token);
+  response.cookie('jwt', token, { sameSite: 'lax' });
   response.status(200).redirect(config.CLIENT_URL);
 });
 

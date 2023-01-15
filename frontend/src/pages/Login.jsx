@@ -13,8 +13,6 @@ import userServices from '../services/user';
 import Google from '../img/google.png';
 
 const Login = () => {
-  const [user, setUser] = useState('');
-
   const {
     control,
     register,
@@ -29,8 +27,8 @@ const Login = () => {
     },
   });
   const onSubmit = async (data) => {
-    const user = await userServices.login(data);
-    setUser(user);
+    const homePage = await userServices.login(data);
+    window.location.replace(homePage);
   };
 
   const googleLogin = async () => {
@@ -59,7 +57,6 @@ const Login = () => {
           padding: '5px',
         }}
       >
-        <div>{user.displayName}</div>
         <Typography component="h1">Log In</Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box
