@@ -57,6 +57,30 @@ usersRouter.get('/account', async (request, response) => {
   response.status(200).json(user);
 });
 
+usersRouter.put('/account/email', async (request, response) => {
+  const user = await User.findById(request.user);
+  const { oldEmail, newEmail } = request.body;
+  // if oldEmail === user.email
+  // user.email = newEmail
+  // else error old email is incorrect
+});
+
+usersRouter.put('/account/password', async (request, response) => {
+  const user = await User.findById(request.user);
+  const { oldPassword, newPassword } = request.body;
+  const passwordCorrect = user
+    ? await bcrypt.compare(oldPassword, user.passwordHash)
+    : false;
+  if (passwordCorrect) {
+    const newPasswordHash = await bcrypt.hash(newPassword, saltRounds);
+    user.passwordHash = newPasswordHash;
+    await user.save();
+    // response.status().json(user)
+  } else {
+    // error oldPassword incorrect
+  }
+});
+
 usersRouter.delete('/account', async (request, response) => {});
 
 module.exports = usersRouter;

@@ -15,6 +15,7 @@ import {
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Menu from '@mui/material/Menu';
+import HomeIcon from '@mui/icons-material/Home';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -150,7 +151,19 @@ const AppBarFinal = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
+          {/* DrawerMenu */}
           <DrawerMenu />
+
+          {/* Home */}
+          <IconButton
+            size="large"
+            aria-label="show 4 new mails"
+            color="inherit"
+          >
+            <Link to="/">
+              <HomeIcon />
+            </Link>
+          </IconButton>
           {/* <Searchbar filter={filter} handleFilterChange={handleFilterChange} /> */}
           <Searchbar />
           {/* Start */}

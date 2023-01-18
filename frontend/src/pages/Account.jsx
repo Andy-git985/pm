@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, setUserInfo } from '../reducers/userReducer';
 
-import { Button } from '@mui/material';
-
 import userServices from '../services/user';
 import user from '../services/user';
+
+import { Button, Container } from '@mui/material';
+import AppBarFinal from '../components/AppBarFinal';
 
 // TODOS:
 // 1: Change email
@@ -41,9 +42,14 @@ const Account = () => {
 
   return (
     <>
-      <div>My Account</div>
-      <div>{user.displayName}</div>
-      <Button variant="contained">Delete Account</Button>
+      {/* Project does not link to project view */}
+      <AppBarFinal />
+      <Container>
+        <div>My Account</div>
+        <div>{user.displayName}</div>
+        <div>{user.email}</div>
+        <Button variant="contained">Delete Account</Button>
+      </Container>
     </>
   );
 };
