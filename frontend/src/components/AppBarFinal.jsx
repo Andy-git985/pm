@@ -65,6 +65,11 @@ const AppBarFinal = () => {
     handleMobileMenuClose();
   };
 
+  const handleLogOut = () => {
+    dispatch(logout());
+    handleMenuClose();
+  };
+
   // Account menu options
   const renderMenu = (
     <Menu
@@ -83,7 +88,10 @@ const AppBarFinal = () => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link to="/user/account">My account</Link>
+      </MenuItem>
+      <MenuItem onClick={handleLogOut}>Log out</MenuItem>
     </Menu>
   );
 
@@ -182,7 +190,7 @@ const AppBarFinal = () => {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              // onClick={handleProfileMenuOpen}
+              onClick={handleProfileMenuOpen}
               color="inherit"
             >
               {user.loggedIn ? (

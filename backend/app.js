@@ -35,9 +35,9 @@ app.use(express.static('build'));
 app.use(express.json());
 app.use(middleware.requestLogger);
 
-app.use('/user', usersRouter);
 app.use('/auth', authRouter);
 app.use(middleware.tokenExtractor);
+app.use('/user', middleware.userExtractor, usersRouter);
 app.use('/api/notes', middleware.userExtractor, notesRouter);
 
 module.exports = app;

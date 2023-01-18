@@ -52,4 +52,11 @@ usersRouter.post('/login', async (request, response) => {
   response.status(200).redirect(config.CLIENT_URL);
 });
 
+usersRouter.get('/account', async (request, response) => {
+  const user = await User.findById(request.user);
+  response.status(200).json(user);
+});
+
+usersRouter.delete('/account', async (request, response) => {});
+
 module.exports = usersRouter;

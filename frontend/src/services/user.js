@@ -1,5 +1,19 @@
 import axios from 'axios';
 const baseUrl = '/user';
+let token = null;
+
+const setToken = (newToken) => {
+  token = `bearer ${newToken}`;
+};
+
+const getAccountInfo = async () => {
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.get(`${baseUrl}/account`, config);
+  return response.data;
+};
 
 const getLoginUrl = async () => {
   const response = await axios.get('/auth/google/');
@@ -26,4 +40,11 @@ const register = async (credentials) => {
   return response.data;
 };
 
-export default { getLoginUrl, getToken, login, register };
+export default {
+  getAccountInfo,
+  getLoginUrl,
+  getToken,
+  login,
+  register,
+  setToken,
+};

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { filterNotes, setFilterBy } from '../reducers/filterReducer';
 import { InputBase, TextField } from '@mui/material';
@@ -52,20 +53,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 // const Searchbar = ({ filter, handleFilterChange }) => {
 const Searchbar = () => {
+  const [value, setValue] = useState();
   const dispatch = useDispatch();
   const handleFilterChange = (event) => {
     dispatch(setFilterBy('notes'));
     dispatch(filterNotes(event.target.value));
+    setValue(event.target.value);
   };
   return (
     <Search>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
+
       <StyledInputBase
         placeholder="Search…"
         inputProps={{ 'aria-label': 'search' }}
-        // value={filter}
+        value={value}
         onChange={handleFilterChange}
       />
     </Search>
