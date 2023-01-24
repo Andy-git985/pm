@@ -27,29 +27,27 @@ usersRouter.post('/register', async (request, response) => {
 
   const token = jwtToken.create(newUser);
 
-  response.cookie('jwt', token);
-  response.status(201).redirect(config.CLIENT_URL);
+  response.cookie('jwt', token, { sameSite: 'lax' });
+  response.status(201).send({ token, newUser });
 });
 
 usersRouter.post('/login', async (request, response) => {
   const { email, password } = request.body;
 
-  const existingUser = await User.findOne({ email });
+  const user = await User.findOne({ email });
   const passwordCorrect =
-    existingUser === null
-      ? false
-      : await bcrypt.compare(password, existingUser.passwordHash);
+    user === null ? false : await bcrypt.compare(password, user.passwordHash);
 
-  if (!(existingUser && passwordCorrect)) {
+  if (!(user && passwordCorrect)) {
     return response.status(401).json({
       error: 'invalid username or password',
     });
   }
 
-  const token = jwtToken.create(existingUser);
+  const token = jwtToken.create(user);
 
   response.cookie('jwt', token, { sameSite: 'lax' });
-  response.status(200).redirect(config.CLIENT_URL);
+  response.status(201).send({ token, user });
 });
 
 usersRouter.get('/account', async (request, response) => {

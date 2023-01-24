@@ -16,12 +16,6 @@ const App = () => {
     dispatch(initializeNotes());
   }, [dispatch]);
 
-  const user = useSelector(({ user }) => user);
-  if (user.loggedIn) {
-    noteServices.setToken(user.userToken);
-    userServices.setToken(user.userToken);
-  }
-
   return (
     <BrowserRouter>
       <Routes>

@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
   Button,
@@ -9,10 +11,14 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { logInUser } from '../reducers/userReducer';
 import userServices from '../services/user';
 import Google from '../img/google.png';
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { userInfo } = useSelector(({ user }) => user);
   const {
     control,
     register,
@@ -26,9 +32,16 @@ const Login = () => {
       password: '',
     },
   });
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/');
+    }
+  }, [userInfo, navigate]);
+
   const onSubmit = async (data) => {
-    const homePage = await userServices.login(data);
-    window.location.replace(homePage);
+    // const homePage = await userServices.login(data);
+    dispatch(logInUser(data));
   };
 
   const googleLogin = async () => {

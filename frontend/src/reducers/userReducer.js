@@ -1,15 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { useLayoutEffect } from 'react';
 import userService from '../services/user';
 
 const userToken = document.cookie ? userService.getToken('jwt') : null;
-const loggedIn = document.cookie ? true : false;
-const accountInfo = null;
 
 const initialState = {
-  loggedIn,
   userToken,
-  accountInfo,
+  userInfo: null,
 };
 
 // Is this the appropiate place as initialState does not have a user
@@ -19,34 +15,44 @@ const userSlice = createSlice({
   reducers: {
     logout(state, action) {
       document.cookie = 'jwt= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
-      state.loggedIn = false;
       state.userToken = null;
-    },
-    remove(state, action) {
-      const id = action.payload;
-      state.loggedIn = false;
-      state.userToken = null;
-      return state.filter((user) => user.id !== id);
+      state.userInfo = null;
     },
     setUser(state, action) {
-      state.accountInfo = action.payload;
+      const user = action.payload;
+      state.userToken = user.token;
+      state.userInfo = user.user;
+    },
+    setUserDetails(state, action) {
+      state.userInfo = action.payload;
     },
   },
 });
 
-export const { logout, remove, setUser } = userSlice.actions;
+export const { logout, remove, setUser, setUserDetails } = userSlice.actions;
 
-export const setUserInfo = () => {
+export const registerUser = (data) => {
   return async (dispatch) => {
-    const user = await userService.getAccountInfo();
+    const user = await userService.register(data);
     dispatch(setUser(user));
+  };
+};
+export const logInUser = (data) => {
+  return async (dispatch) => {
+    const user = await userService.login(data);
+    dispatch(setUser(user));
+  };
+};
+export const getUserDetails = () => {
+  return async (dispatch) => {
+    const details = await userService.getAccountInfo();
+    dispatch(setUserDetails(details));
   };
 };
 export const removeUser = (id) => {
   return async (dispatch) => {
     await userService.delete(id);
-    // possibly log out is all I need
-    dispatch(remove(id));
+    dispatch(logout());
   };
 };
 

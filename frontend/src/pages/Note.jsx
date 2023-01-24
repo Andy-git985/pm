@@ -12,7 +12,8 @@ const Note = () => {
     view && view !== 'Note Form'
       ? notes.find((note) => note.id === view)
       : null;
-
+  const user = useSelector(({ user }) => user);
+  console.log(user);
   return (
     <>
       <AppBarFinal />

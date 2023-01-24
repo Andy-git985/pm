@@ -32,11 +32,13 @@ const getToken = (key) => {
 
 const login = async (credentials) => {
   const response = await axios.post(`${baseUrl}/login`, credentials);
+  setToken(response.data.token);
   return response.data;
 };
 
 const register = async (credentials) => {
   const response = await axios.post(`${baseUrl}/register`, credentials);
+  setToken(response.data.token);
   return response.data;
 };
 

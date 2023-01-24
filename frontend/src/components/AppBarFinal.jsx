@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DrawerMenu from './DrawerMenu';
 import Searchbar from './Searchbar';
 
@@ -24,11 +24,17 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logout } from '../reducers/userReducer';
+import { getUserDetails, logout } from '../reducers/userReducer';
 
 const AppBarFinal = () => {
-  const user = useSelector(({ user }) => user);
+  const { userInfo, userToken } = useSelector(({ user }) => user);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (userToken) {
+      dispatch(getUserDetails());
+    }
+  }, [userToken, dispatch]);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -168,10 +174,10 @@ const AppBarFinal = () => {
           <Searchbar />
           {/* Start */}
           <Box sx={{ flexGrow: 1, outline: '1px solid red' }}>
-            {user.loggedIn && (
-              <Typography component="h1">{user.displayName}</Typography>
+            {userInfo && (
+              <Typography component="h1">{userInfo.displayName}</Typography>
             )}
-            {user.loggedIn && <Button onClick={handleLogout}>Log out</Button>}
+            {userInfo && <Button onClick={handleLogout}>Log out</Button>}
           </Box>
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             {/* Mail */}
@@ -197,23 +203,26 @@ const AppBarFinal = () => {
             </IconButton>
 
             {/* Accounts */}
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              {user.loggedIn ? (
+
+            {userInfo ? (
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
                 <AccountCircle />
-              ) : (
-                <Link to="/user/login">
-                  <AccountCircle />
-                </Link>
-              )}
-            </IconButton>
+              </IconButton>
+            ) : (
+              <Link to="/user/login">
+                <Button variant="text" sx={{ color: 'white', fontWeight: 700 }}>
+                  Log In
+                </Button>
+              </Link>
+            )}
           </Box>
 
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

@@ -8,10 +8,10 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import authServices from '../services/user';
+import { registerUser } from '../reducers/userReducer';
 
 const Register = () => {
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const {
     control,
     register,
@@ -26,9 +26,11 @@ const Register = () => {
   // },
 
   const onSubmit = async (data) => {
-    const user = await authServices.register(data);
-    console.log('register frontend', user);
-    setUser(user.username);
+    if (data.password !== data.confirmPassword) {
+      // set a error message
+      return;
+    }
+    dispatchEvent(registerUser(data));
   };
 
   return (
@@ -41,7 +43,6 @@ const Register = () => {
       }}
     >
       <Paper elevation={3}>
-        <div>{user}</div>
         <Typography component="h1">Register</Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box
@@ -71,8 +72,15 @@ const Register = () => {
             ></TextField>
             <TextField
               label="Password"
+              type="password"
               required
               {...register('password')}
+            ></TextField>
+            <TextField
+              label="Confirm password"
+              type="password"
+              required
+              {...register('confirmPassword')}
             ></TextField>
             <Button type="submit" variant="contained">
               Submit
