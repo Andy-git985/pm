@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { filterView } from '../reducers/filterReducer';
 
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -8,7 +9,8 @@ import FolderIcon from '@mui/icons-material/Folder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { AppBar, Paper } from '@mui/material';
+import ViewWeekIcon from '@mui/icons-material/ViewWeek';
+import { AppBar } from '@mui/material';
 
 const Bottom = () => {
   const [value, setValue] = useState('recents');
@@ -54,11 +56,13 @@ const Bottom = () => {
           value="nearby"
           icon={<LocationOnIcon />}
         />
-        <BottomNavigationAction
-          label="Folder"
-          value="folder"
-          icon={<FolderIcon />}
-        />
+        <Link to="/kanban">
+          <BottomNavigationAction
+            label="Kanban"
+            value="kanban"
+            icon={<ViewWeekIcon />}
+          />
+        </Link>
         <BottomNavigationAction
           label="New"
           value="newNote"

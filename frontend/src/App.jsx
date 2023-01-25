@@ -8,18 +8,16 @@ import Account from './pages/Account';
 import Login from './pages/Login';
 import Note from './pages/Note';
 import Register from './pages/Register';
+import Kanban from './pages/Kanban';
 
 const App = () => {
   const dispatch = useDispatch();
   const { userToken } = useSelector(({ user }) => user);
 
   useEffect(() => {
-    dispatch(initializeNotes());
-  }, [dispatch]);
-
-  useEffect(() => {
     if (userToken) {
       jwtServices.setToken(userToken);
+      dispatch(initializeNotes());
       dispatch(getUserDetails());
     }
   }, [userToken, dispatch]);
@@ -30,6 +28,7 @@ const App = () => {
         <Route path="/user/register" element={<Register />} />
         <Route path="/user/login" element={<Login />} />
         <Route path="/user/account" element={<Account />} />
+        <Route path="/kanban" element={<Kanban />} />
       </Routes>
     </BrowserRouter>
   );

@@ -15,16 +15,13 @@ import {
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import data from '../data';
 
 const NoteForm = () => {
-  const folders = ['Personal', 'Work', 'Fitness'];
-  const priority = ['Low', 'Medium', 'High'];
-  const progress = [
-    { name: 'To do', value: 'todo' },
-    { name: 'In progress', value: 'inProgress' },
-    { name: 'Done', value: 'done' },
-  ];
   const [files, setFiles] = useState([]);
+  const folders = data.folders;
+  const priority = data.priority;
+  const progress = data.progress;
 
   const dispatch = useDispatch();
   const {
