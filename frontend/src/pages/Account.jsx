@@ -2,9 +2,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, setUserInfo } from '../reducers/userReducer';
 
-import userServices from '../services/user';
-import user from '../services/user';
-
 import { Button, Container } from '@mui/material';
 import AppBarFinal from '../components/AppBarFinal';
 
@@ -35,10 +32,7 @@ import AppBarFinal from '../components/AppBarFinal';
 //    Delete user
 //    send response
 const Account = () => {
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    userServices.getAccountInfo().then((info) => setUser(info));
-  }, []);
+  const { userInfo } = useSelector(({ user }) => user);
 
   return (
     <>
@@ -46,8 +40,8 @@ const Account = () => {
       <AppBarFinal />
       <Container>
         <div>My Account</div>
-        <div>{user.displayName}</div>
-        <div>{user.email}</div>
+        <div>{userInfo?.displayName}</div>
+        <div>{userInfo?.email}</div>
         <Button variant="contained">Delete Account</Button>
       </Container>
     </>

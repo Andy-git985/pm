@@ -1,12 +1,10 @@
 import axios from 'axios';
-const baseUrl = '/user';
-let token = null;
+import jwtService from './jwt';
 
-const setToken = (newToken) => {
-  token = `bearer ${newToken}`;
-};
+const baseUrl = '/user';
 
 const getAccountInfo = async () => {
+  const token = jwtService.getToken();
   const config = {
     headers: { Authorization: token },
   };
@@ -20,33 +18,19 @@ const getLoginUrl = async () => {
   return response.data.url;
 };
 
-const getToken = (key) => {
-  let value = '';
-  document.cookie.split(';').forEach((e) => {
-    if (e.includes(key)) {
-      value = e.split('=')[1];
-    }
-  });
-  return value;
-};
-
 const login = async (credentials) => {
   const response = await axios.post(`${baseUrl}/login`, credentials);
-  setToken(response.data.token);
   return response.data;
 };
 
 const register = async (credentials) => {
   const response = await axios.post(`${baseUrl}/register`, credentials);
-  setToken(response.data.token);
   return response.data;
 };
 
 export default {
   getAccountInfo,
   getLoginUrl,
-  getToken,
   login,
   register,
-  setToken,
 };

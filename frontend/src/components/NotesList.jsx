@@ -22,7 +22,6 @@ const NotesList = () => {
   // const folder = useSelector(({ filter }) => filter.notes);
   const search = useSelector(({ filter }) => filter.notes);
   const filter = useSelector(({ filter }) => filter.filterBy);
-  console.log('filter', filter);
   const notes = useSelector(({ notes }) => notes);
   // const filteredNotes =
   //   folder === 'All' ? notes : notes.filter((note) => note.folder === folder);

@@ -19,7 +19,11 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 const NoteForm = () => {
   const folders = ['Personal', 'Work', 'Fitness'];
   const priority = ['Low', 'Medium', 'High'];
-  const progress = ['Todo', 'Doing', 'Done'];
+  const progress = [
+    { name: 'To do', value: 'todo' },
+    { name: 'In progress', value: 'inProgress' },
+    { name: 'Done', value: 'done' },
+  ];
   const [files, setFiles] = useState([]);
 
   const dispatch = useDispatch();
@@ -37,6 +41,7 @@ const NoteForm = () => {
       folder: '',
       dueDate: null,
       priority: '',
+      progress: 'todo',
       files: [],
     },
   });
@@ -134,10 +139,10 @@ const NoteForm = () => {
                 <Select {...field} label="progress">
                   {progress.map((p, i) => (
                     <MenuItem
-                      key={`progress-${p}-${i + 1}`}
-                      value={p.toLowerCase()}
+                      key={`progress-${p.value}-${i + 1}`}
+                      value={p.value}
                     >
-                      {p}
+                      {p.name}
                     </MenuItem>
                   ))}
                 </Select>

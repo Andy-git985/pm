@@ -1,11 +1,7 @@
 import axios from 'axios';
+import jwtService from './jwt';
 
 const baseUrl = '/api/notes';
-let token = null;
-
-const setToken = (newToken) => {
-  token = `bearer ${newToken}`;
-};
 
 const getAll = async () => {
   const response = await axios.get(baseUrl);
@@ -13,6 +9,7 @@ const getAll = async () => {
 };
 
 const createNew = async (content) => {
+  const token = jwtService.getToken();
   const config = {
     headers: { Authorization: token },
   };
@@ -21,4 +18,14 @@ const createNew = async (content) => {
   return response.data;
 };
 
-export default { setToken, getAll, createNew };
+const removeNote = async (id) => {
+  const token = jwtService.getToken();
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.delete(`${baseUrl}/${id}`, config);
+  return response;
+};
+
+export default { getAll, createNew, removeNote };

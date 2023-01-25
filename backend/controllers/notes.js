@@ -33,7 +33,7 @@ notesRouter.delete('/:id', async (request, response) => {
   const user = await User.findById(request.user);
   const note = await Note.findById(request.params.id);
   if (note.user.toString() === user.id.toString()) {
-    await note.findByIdAndDelete(request.params.id);
+    await Note.findByIdAndDelete(request.params.id);
     const index = user.notes.findIndex(
       (note) => String(note) === request.params.id
     );

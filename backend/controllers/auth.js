@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const config = require('../utils/config');
 
 authRouter.get('/google', (request, response) => {
-  console.log('auth login route');
   response.status(200).json({ url: config.CALLBACK_URL });
 });
 

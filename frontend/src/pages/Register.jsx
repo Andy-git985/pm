@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import {
   Box,
@@ -11,7 +13,14 @@ import {
 import { registerUser } from '../reducers/userReducer';
 
 const Register = () => {
-  // const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  const { userInfo } = useSelector(({ user }) => user);
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/');
+    }
+  }, [userInfo, navigate]);
+
   const {
     control,
     register,

@@ -11,10 +11,14 @@ const noteSlice = createSlice({
     setNotes(state, action) {
       return action.payload;
     },
+    remove(state, action) {
+      const id = action.payload;
+      return state.filter((post) => post.id !== id);
+    },
   },
 });
 
-export const { appendNote, setNotes } = noteSlice.actions;
+export const { appendNote, setNotes, remove } = noteSlice.actions;
 export const initializeNotes = () => {
   return async (dispatch) => {
     const notes = await noteService.getAll();
@@ -25,6 +29,12 @@ export const createNote = (note) => {
   return async (dispatch) => {
     const newNote = await noteService.createNew(note);
     dispatch(appendNote(newNote));
+  };
+};
+export const removeNote = (id) => {
+  return async (dispatch) => {
+    await noteService.removeNote(id);
+    dispatch(remove(id));
   };
 };
 export default noteSlice.reducer;
