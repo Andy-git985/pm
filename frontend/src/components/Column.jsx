@@ -28,7 +28,7 @@ const Column = ({ column, notes, index }) => {
     <Draggable draggableId={`${column}-${index}`} index={index}>
       {(provided) => (
         <Container {...provided.draggableProps} ref={provided.innerRef}>
-          <Title {...provided.dragHandleProps}>{column.title}</Title>
+          <Title {...provided.dragHandleProps}>{column.name}</Title>
           <Droppable droppableId={`${column}-${index}`} type="task">
             {(provided, snapshot) => (
               <TaskList

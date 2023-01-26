@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { initializeNotes } from './reducers/noteReducers';
 import { getUserDetails } from './reducers/userReducer';
 import jwtServices from './services/jwt';
+import ProtectedRoute from './routing/ProtectedRoute';
 import Account from './pages/Account';
 import Login from './pages/Login';
 import Note from './pages/Note';
@@ -27,8 +28,10 @@ const App = () => {
         <Route path="/*" element={<Note />} />
         <Route path="/user/register" element={<Register />} />
         <Route path="/user/login" element={<Login />} />
-        <Route path="/user/account" element={<Account />} />
-        <Route path="/kanban" element={<Kanban />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/user/account" element={<Account />} />
+          <Route path="/kanban" element={<Kanban />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

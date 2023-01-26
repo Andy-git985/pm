@@ -1,12 +1,17 @@
+import { useState, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Grid } from '@mui/material';
 import AppBarFinal from '../components/AppBarFinal';
 import Bottom from '../components/Bottom';
 import NoteForm from '../components/NoteForm';
 import NotesList from '../components/NotesList';
+import UpdateForm from '../components/UpdateForm';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
-import { removeNote } from '../reducers/noteReducers';
-import jwtServices from '../services/jwt';
+const Alert = forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Note = () => {
   const dispatch = useDispatch();
@@ -16,9 +21,20 @@ const Note = () => {
     view && view !== 'Note Form'
       ? notes.find((note) => note.id === view)
       : null;
-  const handleClick = (id) => {
-    dispatch(removeNote(id));
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
   };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
     <>
       <AppBarFinal />
@@ -40,17 +56,19 @@ const Note = () => {
           }}
         >
           {view === 'Note Form' && <NoteForm />}
-          {note && (
-            <>
-              <div>{note.title}</div>
-              <div>{note.content}</div>
-              <div>{note.folder}</div>
-              <Button onClick={() => handleClick(note.id)}>Delete</Button>
-            </>
-          )}
+          {note && <UpdateForm note={note} />}
+          <Button variant="outlined" onClick={handleClick}>
+            Open success snackbar
+          </Button>
           <Bottom sx={{ marginTop: '25px' }} />
         </Grid>
       </Grid>
+
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          This is a success message!
+        </Alert>
+      </Snackbar>
     </>
   );
 };

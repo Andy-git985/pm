@@ -18,7 +18,6 @@ const initialState = {
   userInfo: null,
 };
 
-// Is this the appropiate place as initialState does not have a user
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -61,8 +60,9 @@ export const getUserDetails = () => {
 };
 export const removeUser = (id) => {
   return async (dispatch) => {
-    await userService.delete(id);
-    dispatch(logout());
+    await userService.remove(id);
+    console.log('dispatched');
+    // dispatch(logout());
   };
 };
 

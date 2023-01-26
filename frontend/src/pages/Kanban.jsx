@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import fieldData from '../data';
 import Column from '../components/Column';
+import AppBarFinal from '../components/AppBarFinal';
 
 const Container = styled.div`
   display: flex;
@@ -10,9 +12,11 @@ const Container = styled.div`
 
 const Kanban = () => {
   const notes = useSelector(({ notes }) => notes);
-  console.log(notes);
-  const progress = ['todo', 'inProgress', 'done'];
-  const noteState = progress.map((p) => notes.filter((n) => n.progress === p));
+
+  const progress = fieldData.progress;
+  const noteState = progress.map((p) =>
+    notes.filter((n) => n.progress === p.value)
+  );
   const [data, setData] = useState(noteState);
 
   const onDragStart = (start) => {
@@ -101,33 +105,36 @@ const Kanban = () => {
     setData(newState);
   };
   return (
-    <DragDropContext
-      onDragStart={onDragStart}
-      onDragUpdate={onDragUpdate}
-      onDragEnd={onDragEnd}
-    >
-      <Droppable
-        droppableId="all-collumns"
-        direction="horizontal"
-        type="column"
+    <>
+      <AppBarFinal />
+      <DragDropContext
+        onDragStart={onDragStart}
+        onDragUpdate={onDragUpdate}
+        onDragEnd={onDragEnd}
       >
-        {(provided) => (
-          <Container {...provided.droppableProps} ref={provided.innerRef}>
-            {noteState.map((notes, index) => {
-              return (
-                <Column
-                  key={notes.id}
-                  column={progress[index]}
-                  notes={notes}
-                  index={index}
-                />
-              );
-            })}
-            {provided.placeholder}
-          </Container>
-        )}
-      </Droppable>
-    </DragDropContext>
+        <Droppable
+          droppableId="all-collumns"
+          direction="horizontal"
+          type="column"
+        >
+          {(provided) => (
+            <Container {...provided.droppableProps} ref={provided.innerRef}>
+              {noteState.map((notes, index) => {
+                return (
+                  <Column
+                    key={notes.id}
+                    column={progress[index]}
+                    notes={notes}
+                    index={index}
+                  />
+                );
+              })}
+              {provided.placeholder}
+            </Container>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </>
   );
 };
 

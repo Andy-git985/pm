@@ -15,7 +15,15 @@ const ListItemContainer = styled('div')(() => ({
 const DrawerMenu = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const notes = useSelector(({ notes }) => notes);
+  const folders = useSelector(({ notes }) => notes).reduce(
+    (allFolders, current) => {
+      if (!allFolders.includes(current.folder)) {
+        return [...allFolders, current.folder];
+      }
+      return allFolders;
+    },
+    []
+  );
 
   const handleClickFolder = (folder) => {
     dispatch(setFilterBy('folder'));
@@ -35,11 +43,11 @@ const DrawerMenu = () => {
         </ListItem>
         <Divider />
       </ListItemContainer>
-      {notes.map((note) => (
-        <ListItemContainer key={note.id}>
-          <ListItem onClick={() => handleClickFolder(note.folder)}>
+      {folders.map((folder, index) => (
+        <ListItemContainer key={`${folder}-${index + 1}`}>
+          <ListItem onClick={() => handleClickFolder(folder)}>
             <FolderIcon sx={{ marginRight: '5px' }} />
-            <ListItemText primary={note.folder} />
+            <ListItemText primary={folder} />
           </ListItem>
           <Divider />
         </ListItemContainer>

@@ -51,8 +51,6 @@ const NoteForm = () => {
   };
 
   const onSubmit = (data) => {
-    // console.log(data.dueDate['$d']);
-    // console.log(files);
     dispatch(createNote(data));
   };
 

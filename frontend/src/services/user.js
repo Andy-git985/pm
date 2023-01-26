@@ -28,9 +28,20 @@ const register = async (credentials) => {
   return response.data;
 };
 
+const remove = async () => {
+  const token = jwtService.getToken();
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.delete(`${baseUrl}/account`, config);
+  return response.status;
+};
+
 export default {
   getAccountInfo,
   getLoginUrl,
   login,
   register,
+  remove,
 };
