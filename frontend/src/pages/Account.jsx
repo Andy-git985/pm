@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { changeUserEmail, removeUser } from '../reducers/userReducer';
@@ -50,12 +50,59 @@ const ChangeEmail = ({ handleChange, handleSubmit }) => {
   );
 };
 
+const ChangePassword = ({
+  handleOldPasswordChange,
+  handleNewPasswordChange,
+  handleNewPasswordConfirm,
+  handleSubmit,
+}) => {
+  return (
+    <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+      <TextField
+        onChange={handleOldPasswordChange}
+        type="password"
+        label="Old Password"
+        variant="outlined"
+        color="secondary"
+        fullWidth
+        required
+      />
+      <TextField
+        onChange={handleNewPasswordChange}
+        type="password"
+        label="New Password"
+        variant="outlined"
+        color="secondary"
+        fullWidth
+        required
+      />
+      <TextField
+        onChange={handleNewPasswordConfirm}
+        type="password"
+        label="Confirm New Password"
+        variant="outlined"
+        color="secondary"
+        fullWidth
+        required
+      />
+      <Button type="submit" variant="contained" color="secondary">
+        Submit
+      </Button>
+    </form>
+  );
+};
+
 const Account = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userInfo } = useSelector(({ user }) => user);
 
   const [newEmail, setNewEmail] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
+
+  const [message, setMessage] = useState('');
 
   const handleEmailChange = (event) => {
     setNewEmail(event.target.value);
@@ -67,6 +114,20 @@ const Account = () => {
     dispatch(changeUserEmail({ email: newEmail }));
   };
 
+  const handleOldPasswordChange = (event) => {
+    setOldPassword(event.target.value);
+  };
+  const handleNewPasswordChange = (event) => {
+    setNewPassword(event.target.value);
+  };
+  const handleNewPasswordConfirm = (event) => {
+    setNewPasswordConfirm(event.target.value);
+  };
+  const handlePasswordSubmit = (event) => {
+    event.preventDefault();
+    console.log(oldPassword, newPassword, newPasswordConfirm);
+  };
+
   const handleDelete = () => {
     dispatch(removeUser());
   };
@@ -75,13 +136,14 @@ const Account = () => {
     if (!userInfo) {
       navigate('/login');
     }
-  }, [userInfo]);
+  }, [userInfo, navigate]);
 
   return (
     <>
       {/* Project does not link to project view */}
       <AppBarFinal />
       <Container>
+        <h1>{message}</h1>
         <div>My Account</div>
         <div>{userInfo?.displayName}</div>
         <div>{userInfo?.email}</div>
@@ -89,6 +151,12 @@ const Account = () => {
         <ChangeEmail
           handleChange={handleEmailChange}
           handleSubmit={handleEmailSubmit}
+        />
+        <ChangePassword
+          handleOldPasswordChange={handleOldPasswordChange}
+          handleNewPasswordChange={handleNewPasswordChange}
+          handleNewPasswordConfirm={handleNewPasswordConfirm}
+          handleSubmit={handlePasswordSubmit}
         />
         <Button variant="contained" onClick={handleDelete}>
           Delete Account
