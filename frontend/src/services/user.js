@@ -38,10 +38,21 @@ const remove = async () => {
   return response.status;
 };
 
+const updateEmail = async (data) => {
+  const token = jwtService.getToken();
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.put(`${baseUrl}/account/email`, data, config);
+  return response.data;
+};
+
 export default {
   getAccountInfo,
   getLoginUrl,
   login,
   register,
   remove,
+  updateEmail,
 };

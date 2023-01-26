@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout, setUserInfo, removeUser } from '../reducers/userReducer';
+import { useNavigate } from 'react-router-dom';
+import { changeUserEmail, removeUser } from '../reducers/userReducer';
 import { Button, Container, TextField } from '@mui/material';
 import AppBarFinal from '../components/AppBarFinal';
 
@@ -51,8 +52,8 @@ const ChangeEmail = ({ handleChange, handleSubmit }) => {
 
 const Account = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { userInfo } = useSelector(({ user }) => user);
-  console.log(userInfo);
 
   const [newEmail, setNewEmail] = useState('');
 
@@ -63,12 +64,18 @@ const Account = () => {
   const handleEmailSubmit = (event) => {
     event.preventDefault();
     // run email validation
-    dispatch();
+    dispatch(changeUserEmail({ email: newEmail }));
   };
 
   const handleDelete = () => {
     dispatch(removeUser());
   };
+
+  useEffect(() => {
+    if (!userInfo) {
+      navigate('/login');
+    }
+  }, [userInfo]);
 
   return (
     <>

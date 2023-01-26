@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { useLayoutEffect } from 'react';
 import userService from '../services/user';
 
 const getToken = (key) => {
@@ -58,11 +59,18 @@ export const getUserDetails = () => {
     dispatch(setUserDetails(details));
   };
 };
-export const removeUser = (id) => {
+export const removeUser = () => {
   return async (dispatch) => {
-    await userService.remove(id);
-    console.log('dispatched');
-    // dispatch(logout());
+    await userService.remove();
+    dispatch(logout());
+  };
+};
+
+export const changeUserEmail = (data) => {
+  return async (dispatch) => {
+    console.log(data);
+    const updatedUser = await userService.updateEmail(data);
+    dispatch(setUserDetails(updatedUser));
   };
 };
 

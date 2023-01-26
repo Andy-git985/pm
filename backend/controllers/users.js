@@ -58,10 +58,13 @@ usersRouter.get('/account', async (request, response) => {
 
 usersRouter.put('/account/email', async (request, response) => {
   const user = await User.findById(request.user);
-  const { oldEmail, newEmail } = request.body;
-  // if oldEmail === user.email
-  // user.email = newEmail
-  // else error old email is incorrect
+  const { email } = request.body;
+  console.log('user', user);
+  console.log('request user', request.user);
+  console.log('request body', request.body);
+  user.email = email;
+  await user.save();
+  response.status(204).json(user);
 });
 
 usersRouter.put('/account/password', async (request, response) => {
