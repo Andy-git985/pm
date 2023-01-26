@@ -12,10 +12,14 @@ const Container = styled.div`
 
 const Kanban = () => {
   const notes = useSelector(({ notes }) => notes);
-
+  const filter = useSelector(({ filter }) => filter);
+  const notesByFolder =
+    filter.filterBy === 'folder'
+      ? notes.filter((note) => note.folder === filter.notes)
+      : notes;
   const progress = fieldData.progress;
   const noteState = progress.map((p) =>
-    notes.filter((n) => n.progress === p.value)
+    notesByFolder.filter((n) => n.progress === p.value)
   );
   const [data, setData] = useState(noteState);
 

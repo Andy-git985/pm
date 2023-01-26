@@ -38,7 +38,7 @@ const Column = ({ column, notes, index }) => {
               >
                 {/* <InnerList tasks={tasks} /> */}
                 {notes.map((note, index) => (
-                  <Note key={note.id} task={note} index={index} />
+                  <Note key={note.id} note={note} index={index} />
                 ))}
                 {provided.placeholder}
               </TaskList>

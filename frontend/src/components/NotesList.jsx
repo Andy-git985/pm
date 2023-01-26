@@ -19,12 +19,9 @@ const contains = (obj, value) => {
 
 const NotesList = () => {
   const dispatch = useDispatch();
-  // const folder = useSelector(({ filter }) => filter.notes);
   const search = useSelector(({ filter }) => filter.notes);
   const filter = useSelector(({ filter }) => filter.filterBy);
   const notes = useSelector(({ notes }) => notes);
-  // const filteredNotes =
-  //   folder === 'All' ? notes : notes.filter((note) => note.folder === folder);
   const filteredNotes =
     filter === 'folder'
       ? notes.filter((note) => note.folder === search)
@@ -33,8 +30,6 @@ const NotesList = () => {
           Object.values(note).some((n) => contains(n, search))
         )
       : notes;
-  // notes.forEach((note) => Object.values(note).forEach((n) => console.log(n)));
-
   const handleClick = (id) => {
     dispatch(filterView(id));
   };

@@ -11,20 +11,12 @@ const filterSlice = createSlice({
   initialState,
   reducers: {
     filterNotes(state, action) {
-      // console.log('STATE ', state);
-      // console.log('ACTION', action);
-      // return (state = action.payload);
       state.notes = action.payload;
     },
     filterView(state, action) {
-      // console.log('STATE ', state);
-      // console.log('ACTION', action);
-      // return (state = action.payload);
       state.view = action.payload;
     },
     setFilterBy(state, action) {
-      // console.log('STATE ', state);
-      console.log('ACTION', action);
       state.filterBy = action.payload;
     },
   },

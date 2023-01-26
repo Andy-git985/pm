@@ -18,9 +18,9 @@ const Handle = styled.div`
   margin-right: 8px;
 `;
 
-export const NoteDraggable = ({ task, index }) => {
+export const NoteDraggable = ({ note, index }) => {
   return (
-    <Draggable draggableId={task.id} index={index}>
+    <Draggable draggableId={note.id} index={index}>
       {(provided, snapshot) => (
         <Container
           {...provided.draggableProps}
@@ -29,7 +29,7 @@ export const NoteDraggable = ({ task, index }) => {
           isDragging={snapshot.isDragging}
         >
           <Handle {...provided.dragHandleProps} />
-          {task.content}
+          {note.title}
         </Container>
       )}
     </Draggable>
