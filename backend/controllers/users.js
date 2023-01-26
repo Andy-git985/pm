@@ -82,11 +82,6 @@ usersRouter.put('/account/password', async (request, response) => {
 
 usersRouter.delete('/account', async (request, response) => {
   const user = await User.findById(request.user);
-  // console.log(user.notes);
-  // const notesToBeDeleted = user.notes.map((note) =>
-  //   Note.findByIdAndRemove(note)
-  // );
-  // await Promise.all(notesToBeDeleted);
   await Note.deleteMany({ user });
   await User.findByIdAndRemove(request.user);
   response.status(204).end();

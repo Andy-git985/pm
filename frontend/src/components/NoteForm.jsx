@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import { createNote } from '../reducers/noteReducers';
@@ -53,6 +53,20 @@ const NoteForm = () => {
   const onSubmit = (data) => {
     dispatch(createNote(data));
   };
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset({
+        title: '',
+        content: '',
+        folder: '',
+        dueDate: null,
+        priority: '',
+        progress: 'todo',
+        files: [],
+      });
+    }
+  }, [formState, reset]);
 
   return (
     <div>

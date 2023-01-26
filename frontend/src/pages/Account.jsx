@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, setUserInfo, removeUser } from '../reducers/userReducer';
-
-import { Button, Container } from '@mui/material';
+import { Button, Container, TextField } from '@mui/material';
 import AppBarFinal from '../components/AppBarFinal';
 
 // TODOS:
@@ -31,11 +30,43 @@ import AppBarFinal from '../components/AppBarFinal';
 //    }
 //    Delete user
 //    send response
+
+const ChangeEmail = ({ handleChange, handleSubmit }) => {
+  return (
+    <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+      <TextField
+        onChange={handleChange}
+        label="Change Email"
+        variant="outlined"
+        color="secondary"
+        fullWidth
+        required
+      />
+      <Button type="submit" variant="contained" color="secondary">
+        Submit
+      </Button>
+    </form>
+  );
+};
+
 const Account = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector(({ user }) => user);
+  console.log(userInfo);
 
-  const handleClick = () => {
+  const [newEmail, setNewEmail] = useState('');
+
+  const handleEmailChange = (event) => {
+    setNewEmail(event.target.value);
+  };
+
+  const handleEmailSubmit = (event) => {
+    event.preventDefault();
+    // run email validation
+    dispatch();
+  };
+
+  const handleDelete = () => {
     dispatch(removeUser());
   };
 
@@ -47,7 +78,12 @@ const Account = () => {
         <div>My Account</div>
         <div>{userInfo?.displayName}</div>
         <div>{userInfo?.email}</div>
-        <Button variant="contained" onClick={handleClick}>
+        <div>{newEmail}</div>
+        <ChangeEmail
+          handleChange={handleEmailChange}
+          handleSubmit={handleEmailSubmit}
+        />
+        <Button variant="contained" onClick={handleDelete}>
           Delete Account
         </Button>
       </Container>
