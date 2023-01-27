@@ -39,6 +39,7 @@ const Register = () => {
       // set a error message
       return;
     }
+    data.email = data.email.toLowerCase();
     dispatchEvent(registerUser(data));
   };
 
