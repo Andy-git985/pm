@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { filterView } from '../reducers/filterReducer';
 import {
   Autocomplete,
   Button,
@@ -17,21 +18,49 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import data from '../data';
 import { removeNote } from '../reducers/noteReducers';
 
-const UpdateForm = ({ note }) => {
-  const [title, setTitle] = useState(note.title);
-  const [content, setContent] = useState(note.content);
-  const [folder, setFolder] = useState(note.folder);
-  const [dueDate, setDueDate] = useState(note.dueDate);
-  const [priority, setPriority] = useState(note.priority);
-  const [progress, setProgress] = useState(note.progress);
+const UpdateForm = () => {
+  const dispatch = useDispatch();
+  const view = useSelector(({ filter }) => filter.view);
+  const notes = useSelector(({ notes }) => notes);
+  const [note, setNote] = useState({});
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [folder, setFolder] = useState('');
+  const [dueDate, setDueDate] = useState('');
+  const [priority, setPriority] = useState('');
+  const [progress, setProgress] = useState('');
   const [files, setFiles] = useState([]);
   const folders = data.folders;
   const priorityData = data.priority;
   const progressData = data.progress;
 
+  useEffect(() => {
+    if (view !== 'Note Form') {
+      setNote(notes.find((note) => note.id === view));
+    }
+  }, [notes, view]);
+
+  useEffect(() => {
+    if (note) {
+      setTitle(note.title);
+      setContent(note.content);
+      setFolder(note.folder);
+      setDueDate(note.dueDate);
+      setPriority(note.priority);
+      setProgress(note.progress);
+    }
+    if (!note) {
+      dispatch(filterView('Note Form'));
+    }
+  }, [note, dispatch]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log({ title, content, folder, dueDate, priority, files });
+  };
+
+  const handleDelete = (id) => {
+    dispatch(removeNote(id));
   };
   return (
     <>
@@ -81,7 +110,7 @@ const UpdateForm = ({ note }) => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label="Basic example"
-            value={note.dueDate}
+            value={dueDate}
             onChange={(newValue) => {
               setDueDate(newValue);
             }}
@@ -131,6 +160,9 @@ const UpdateForm = ({ note }) => {
           Update
         </Button>
       </form>
+      <Button variant="contained" onClick={() => handleDelete(note.id)}>
+        Delete
+      </Button>
       <div>Title: {title}</div>
       <div>Content: {content}</div>
       <div>Folder: {folder}</div>

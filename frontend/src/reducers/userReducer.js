@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { useLayoutEffect } from 'react';
 import userService from '../services/user';
 
 const getToken = (key) => {

@@ -17,10 +17,10 @@ const Note = () => {
   const dispatch = useDispatch();
   const view = useSelector(({ filter }) => filter.view);
   const notes = useSelector(({ notes }) => notes);
-  const note =
-    view && view !== 'Note Form'
-      ? notes.find((note) => note.id === view)
-      : null;
+  // const note =
+  //   view && view !== 'Note Form'
+  //     ? notes.find((note) => note.id === view)
+  //     : null;
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -56,7 +56,7 @@ const Note = () => {
           }}
         >
           {view === 'Note Form' && <NoteForm />}
-          {note && <UpdateForm note={note} />}
+          {view !== 'Note Form' && <UpdateForm />}
           <Button variant="outlined" onClick={handleClick}>
             Open success snackbar
           </Button>
