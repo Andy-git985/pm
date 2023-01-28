@@ -48,6 +48,16 @@ const updateEmail = async (data) => {
   return response.data;
 };
 
+const updatePassword = async (data) => {
+  const token = jwtService.getToken();
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.put(`${baseUrl}/account/password`, data, config);
+  return response.data;
+};
+
 export default {
   getAccountInfo,
   getLoginUrl,
@@ -55,4 +65,5 @@ export default {
   register,
   remove,
   updateEmail,
+  updatePassword,
 };

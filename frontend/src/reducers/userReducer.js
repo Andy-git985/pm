@@ -17,6 +17,7 @@ const userToken = document.cookie ? getToken('jwt') : null;
 const initialState = {
   userToken,
   userInfo: null,
+  message: '',
 };
 
 const userSlice = createSlice({
@@ -36,10 +37,14 @@ const userSlice = createSlice({
     setUserDetails(state, action) {
       state.userInfo = action.payload;
     },
+    setMessage(state, action) {
+      state.message = action.payload;
+    },
   },
 });
 
-export const { logout, remove, setUser, setUserDetails } = userSlice.actions;
+export const { logout, remove, setMessage, setUser, setUserDetails } =
+  userSlice.actions;
 
 export const registerUser = (data) => {
   return async (dispatch) => {
@@ -68,8 +73,18 @@ export const removeUser = () => {
 
 export const changeUserEmail = (data) => {
   return async (dispatch) => {
-    console.log(data);
     const updatedUser = await userService.updateEmail(data);
+    dispatch(setUserDetails(updatedUser));
+  };
+};
+
+export const changeUserPassword = (data) => {
+  return async (dispatch) => {
+    const updatedUser = await userService.updatePassword(data);
+    console.log(updatedUser.data.json());
+    if (updatedUser.error) {
+      dispatch(setMessage(updatedUser.error));
+    }
     dispatch(setUserDetails(updatedUser));
   };
 };

@@ -45,7 +45,7 @@ const UpdateForm = ({ note }) => {
             label="Title"
           />
         </FormControl>
-        <FormControl>
+        {/* <FormControl>
           <InputLabel htmlFor="content">Content</InputLabel>
           <OutlinedInput
             id="content"
@@ -55,7 +55,15 @@ const UpdateForm = ({ note }) => {
             multiline
             fullWidth
           />
-        </FormControl>
+        </FormControl> */}
+        <TextField
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          label="Content"
+          minRows={4}
+          multiline
+          fullWidth
+        />
         <Autocomplete
           freeSolo
           options={folders}
@@ -70,14 +78,16 @@ const UpdateForm = ({ note }) => {
             />
           )}
         />
-        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
-            label="Due Date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
+            label="Basic example"
+            value={note.dueDate}
+            onChange={(newValue) => {
+              setDueDate(newValue);
+            }}
             renderInput={(params) => <TextField {...params} />}
           />
-        </LocalizationProvider> */}
+        </LocalizationProvider>
         <FormControl>
           <InputLabel>Priority</InputLabel>
           <Select label="Priority" value={priority}>

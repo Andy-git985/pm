@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { changeUserEmail, removeUser } from '../reducers/userReducer';
-import { Button, Container, TextField } from '@mui/material';
+import {
+  changeUserEmail,
+  changeUserPassword,
+  removeUser,
+  setMessage,
+} from '../reducers/userReducer';
+import { Button, Container, TextField, Typography } from '@mui/material';
 import AppBarFinal from '../components/AppBarFinal';
 
 // TODOS:
@@ -55,6 +60,8 @@ const ChangePassword = ({
   handleNewPasswordChange,
   handleNewPasswordConfirm,
   handleSubmit,
+  newError,
+  confirmError,
 }) => {
   return (
     <form noValidate autoComplete="off" onSubmit={handleSubmit}>
@@ -75,6 +82,7 @@ const ChangePassword = ({
         color="secondary"
         fullWidth
         required
+        error={newError}
       />
       <TextField
         onChange={handleNewPasswordConfirm}
@@ -84,6 +92,7 @@ const ChangePassword = ({
         color="secondary"
         fullWidth
         required
+        error={confirmError}
       />
       <Button type="submit" variant="contained" color="secondary">
         Submit
@@ -96,13 +105,14 @@ const Account = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userInfo } = useSelector(({ user }) => user);
+  const { message } = useSelector(({ user }) => user);
 
   const [newEmail, setNewEmail] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
-
-  const [message, setMessage] = useState('');
+  const [newError, setNewError] = useState(false);
+  const [confirmError, setConfirmError] = useState(false);
 
   const handleEmailChange = (event) => {
     setNewEmail(event.target.value);
@@ -123,9 +133,30 @@ const Account = () => {
   const handleNewPasswordConfirm = (event) => {
     setNewPasswordConfirm(event.target.value);
   };
-  const handlePasswordSubmit = (event) => {
+  const handlePasswordSubmit = async (event) => {
     event.preventDefault();
-    console.log(oldPassword, newPassword, newPasswordConfirm);
+    setNewError(false);
+    setConfirmError(false);
+    dispatch(setMessage(''));
+
+    // console.log(oldPassword, newPassword, newPasswordConfirm);
+    if (newPassword === '') {
+      setNewError(true);
+      return;
+    }
+    if (newPasswordConfirm === '') {
+      setConfirmError(true);
+      return;
+    }
+    if (newPassword !== newPasswordConfirm) {
+      setNewError(true);
+      setConfirmError(true);
+      dispatch(setMessage('Passwords do not match'));
+      return;
+    }
+    dispatch(
+      changeUserPassword({ oldPassword, newPassword, newPasswordConfirm })
+    );
   };
 
   const handleDelete = () => {
@@ -153,6 +184,8 @@ const Account = () => {
           handleSubmit={handleEmailSubmit}
         />
         <ChangePassword
+          newError={newError}
+          confirmError={confirmError}
           handleOldPasswordChange={handleOldPasswordChange}
           handleNewPasswordChange={handleNewPasswordChange}
           handleNewPasswordConfirm={handleNewPasswordConfirm}
@@ -161,6 +194,7 @@ const Account = () => {
         <Button variant="contained" onClick={handleDelete}>
           Delete Account
         </Button>
+        <div>{message}</div>
       </Container>
     </>
   );

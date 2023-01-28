@@ -69,17 +69,22 @@ usersRouter.put('/account/email', async (request, response) => {
 
 usersRouter.put('/account/password', async (request, response) => {
   const user = await User.findById(request.user);
-  const { oldPassword, newPassword } = request.body;
+  const { oldPassword, newPassword, newPasswordConfirm } = request.body;
   const passwordCorrect = user
     ? await bcrypt.compare(oldPassword, user.passwordHash)
     : false;
-  if (passwordCorrect) {
+  if (passwordCorrect && newPassword === newPasswordConfirm) {
+    const saltRounds = 10;
     const newPasswordHash = await bcrypt.hash(newPassword, saltRounds);
     user.passwordHash = newPasswordHash;
     await user.save();
+    response.status(204).json(user);
+
     // response.status().json(user)
   } else {
-    // error oldPassword incorrect
+    response.status(401).json({
+      error: 'invalid  password',
+    });
   }
 });
 
