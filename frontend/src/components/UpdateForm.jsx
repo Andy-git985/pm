@@ -56,8 +56,6 @@ const UpdateForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(typeof dueDate);
-    // console.log({ title, content, folder, priority, progress });
     const updatedNote = { title, content, folder, priority, progress };
     dispatch(updateNote(note.id, updatedNote));
   };

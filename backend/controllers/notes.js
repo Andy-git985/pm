@@ -38,7 +38,7 @@ notesRouter.put('/:id', async (request, response) => {
       request.body,
       { new: true }
     );
-    console.log(updatedNote);
+    updatedNote.edits.push({ user: user.id, date: new Date() });
     await updatedNote.save();
     response.status(200).json(updatedNote);
   } else {
