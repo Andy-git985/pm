@@ -29,6 +29,15 @@ const createNew = async (content) => {
   const response = await axios.post(baseUrl, content, config);
   return response.data;
 };
+const updateNote = async (id, newObject) => {
+  const token = jwtService.getToken();
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.put(`${baseUrl}/${id}`, newObject, config);
+  return response.data;
+};
 
 const removeNote = async (id) => {
   const token = jwtService.getToken();
@@ -41,4 +50,4 @@ const removeNote = async (id) => {
   return response;
 };
 
-export default { getAll, createNew, removeNote };
+export default { getAll, createNew, updateNote, removeNote };

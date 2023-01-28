@@ -29,6 +29,23 @@ notesRouter.post('/', async (request, response) => {
   response.status(201).json(note);
 });
 
+notesRouter.put('/:id', async (request, response) => {
+  const user = await User.findById(request.user);
+  const note = await Note.findById(request.params.id);
+  if (note.user.toString() === user.id.toString()) {
+    const updatedNote = await Note.findByIdAndUpdate(
+      request.params.id,
+      request.body,
+      { new: true }
+    );
+    console.log(updatedNote);
+    await updatedNote.save();
+    response.status(200).json(updatedNote);
+  } else {
+    response.status(401).json({ error: 'unauthorized user' });
+  }
+});
+
 notesRouter.delete('/:id', async (request, response) => {
   const user = await User.findById(request.user);
   const note = await Note.findById(request.params.id);

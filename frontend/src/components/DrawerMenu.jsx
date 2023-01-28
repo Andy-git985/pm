@@ -15,15 +15,15 @@ const ListItemContainer = styled('div')(() => ({
 const DrawerMenu = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const folders = useSelector(({ notes }) => notes).reduce(
-    (allFolders, current) => {
+  const notes = useSelector(({ notes }) => notes);
+  const folders = notes
+    .reduce((allFolders, current) => {
       if (!allFolders.includes(current.folder)) {
         return [...allFolders, current.folder];
       }
       return allFolders;
-    },
-    []
-  );
+    }, [])
+    .filter(Boolean);
 
   const handleClickFolder = (folder) => {
     dispatch(setFilterBy('folder'));

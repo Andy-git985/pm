@@ -125,10 +125,7 @@ const NoteForm = () => {
                 <InputLabel>Priority</InputLabel>
                 <Select {...field} label="priority">
                   {priority.map((p, i) => (
-                    <MenuItem
-                      key={`priority-${p}-${i + 1}`}
-                      value={p.toLowerCase()}
-                    >
+                    <MenuItem key={`priority-${p}-${i + 1}`} value={p}>
                       {p}
                     </MenuItem>
                   ))}

@@ -16,7 +16,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import data from '../data';
-import { removeNote } from '../reducers/noteReducers';
+import { removeNote, updateNote } from '../reducers/noteReducers';
 
 const UpdateForm = () => {
   const dispatch = useDispatch();
@@ -56,7 +56,10 @@ const UpdateForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log({ title, content, folder, dueDate, priority, files });
+    console.log(typeof dueDate);
+    // console.log({ title, content, folder, priority, progress });
+    const updatedNote = { title, content, folder, priority, progress };
+    dispatch(updateNote(note.id, updatedNote));
   };
 
   const handleDelete = (id) => {
@@ -74,17 +77,6 @@ const UpdateForm = () => {
             label="Title"
           />
         </FormControl>
-        {/* <FormControl>
-          <InputLabel htmlFor="content">Content</InputLabel>
-          <OutlinedInput
-            id="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            label="Content"
-            multiline
-            fullWidth
-          />
-        </FormControl> */}
         <TextField
           value={content}
           onChange={(e) => setContent(e.target.value)}
@@ -119,9 +111,13 @@ const UpdateForm = () => {
         </LocalizationProvider>
         <FormControl>
           <InputLabel>Priority</InputLabel>
-          <Select label="Priority" value={priority}>
+          <Select
+            label="Priority"
+            value={priority}
+            onChange={(e) => setPriority(e.target.value)}
+          >
             {priorityData.map((p, i) => (
-              <MenuItem key={`priority-${p}-${i + 1}`} value={p.toLowerCase()}>
+              <MenuItem key={`priority-${p}-${i + 1}`} value={p}>
                 {p}
               </MenuItem>
             ))}
@@ -129,7 +125,11 @@ const UpdateForm = () => {
         </FormControl>
         <FormControl>
           <InputLabel>Progress</InputLabel>
-          <Select label="progress" value={progress}>
+          <Select
+            label="progress"
+            value={progress}
+            onChange={(e) => setProgress(e.target.value)}
+          >
             {progressData.map((p, i) => (
               <MenuItem key={`progress-${p.value}-${i + 1}`} value={p.value}>
                 {p.name}
@@ -160,6 +160,7 @@ const UpdateForm = () => {
           Update
         </Button>
       </form>
+
       <Button variant="contained" onClick={() => handleDelete(note.id)}>
         Delete
       </Button>
