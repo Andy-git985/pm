@@ -177,7 +177,6 @@ const AppBarFinal = () => {
             {userInfo && (
               <Typography component="h1">{userInfo.displayName}</Typography>
             )}
-            {userInfo && <Button onClick={handleLogout}>Log out</Button>}
           </Box>
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             {/* Mail */}

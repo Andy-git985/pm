@@ -23,30 +23,26 @@ const TaskList = styled.div`
   min-height: 100px;
 `;
 
-const Column = ({ column, notes, index }) => {
+const Column = ({ title, notes }) => {
+  console.log(notes);
   return (
-    <Draggable draggableId={`${column}-${index}`} index={index}>
-      {(provided) => (
-        <Container {...provided.draggableProps} ref={provided.innerRef}>
-          <Title {...provided.dragHandleProps}>{column.name}</Title>
-          <Droppable droppableId={`${column}-${index}`} type="task">
-            {(provided, snapshot) => (
-              <TaskList
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                isDraggingOver={snapshot.isDraggingOver}
-              >
-                {/* <InnerList tasks={tasks} /> */}
-                {notes.map((note, index) => (
-                  <Note key={note.id} note={note} index={index} />
-                ))}
-                {provided.placeholder}
-              </TaskList>
-            )}
-          </Droppable>
-        </Container>
-      )}
-    </Draggable>
+    <Container>
+      <Title>{title.name}</Title>
+      <Droppable droppableId={title} type="task">
+        {(provided, snapshot) => (
+          <TaskList
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            isDraggingOver={snapshot.isDraggingOver}
+          >
+            {notes.map((note, index) => (
+              <Note key={note.id} note={note} index={index} />
+            ))}
+            {provided.placeholder}
+          </TaskList>
+        )}
+      </Droppable>
+    </Container>
   );
 };
 

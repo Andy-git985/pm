@@ -30,7 +30,7 @@ const UpdateForm = () => {
   const [priority, setPriority] = useState('');
   const [progress, setProgress] = useState('');
   const [files, setFiles] = useState([]);
-  const folders = data.folders;
+  const folderData = data.folders;
   const priorityData = data.priority;
   const progressData = data.progress;
 
@@ -85,7 +85,7 @@ const UpdateForm = () => {
         />
         <Autocomplete
           freeSolo
-          options={folders}
+          options={folderData}
           onChange={(event, values) => setFolder(values)}
           value={folder}
           renderInput={(params) => (
