@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { updateNote } from '../reducers/noteReducers';
 import fieldData from '../data';
 import Column from '../components/Column';
 import AppBarFinal from '../components/AppBarFinal';
@@ -19,6 +20,7 @@ const ColumnContainer = styled.div`
   flex-direction: column;
 `;
 const Kanban = () => {
+  const dispatch = useDispatch();
   const notes = useSelector(({ notes }) => notes);
   const filter = useSelector(({ filter }) => filter);
   const notesByFolder =
@@ -33,32 +35,39 @@ const Kanban = () => {
   const [data, setData] = useState(filteredNotes);
 
   const onDragEnd = (result) => {
-    const { destination, source, draggableId } = result;
+    const { destination, source, draggableId, type } = result;
+    console.log(result);
+    console.log('draggableId', draggableId);
+    console.log(source.droppableId);
+    console.log(source.index);
+    console.log(destination.droppableId);
     if (!destination) return;
     const newOrder = Array.from(data);
-    const [reorderedNote] = newOrder.splice(source.index, 1);
-    newOrder.splice(destination.index, 0, reorderedNote);
-    setData(newOrder);
-    return;
+    console.log(newOrder);
+
+    // const [[reorderedNote]] = newOrder.splice(source.index, 1);
+    // console.log(reorderedNote);
+
+    // newOrder.splice(destination.index, 0, reorderedNote);
+    // setData(newOrder);
+
+    // const newObj = { ...reorderedNote };
+
+    // newObj.progress = progress.find((obj) =>
+    //   Object.values(obj).includes(destination.droppableId)
+    // ).value;
+    // dispatch(updateNote(draggableId, newObj));
+    // return;
   };
   return (
     <>
       <AppBarFinal />
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable
-          droppableId="all-collumns"
-          direction="horizontal"
-          type="column"
-        >
-          {(provided) => (
-            <Container {...provided.droppableProps} ref={provided.innerRef}>
-              {data.map((column, index) => {
-                return <Column title={progress[index]} notes={column} />;
-              })}
-              {provided.placeholder}
-            </Container>
-          )}
-        </Droppable>
+        <Container>
+          {data.map((column, index) => {
+            return <Column title={progress[index]} notes={column} />;
+          })}
+        </Container>
       </DragDropContext>
 
       {/* <DragDropContext onDragEnd={onDragEnd}>

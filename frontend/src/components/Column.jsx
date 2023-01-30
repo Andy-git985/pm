@@ -14,7 +14,7 @@ const Container = styled.div`
 const Title = styled.h3`
   padding: 8px;
 `;
-const TaskList = styled.div`
+const NoteList = styled.div`
   padding: 8px;
   transiton: background-color 0.2s ease;
   background-color: ${(props) =>
@@ -24,13 +24,12 @@ const TaskList = styled.div`
 `;
 
 const Column = ({ title, notes }) => {
-  console.log(notes);
   return (
     <Container>
       <Title>{title.name}</Title>
-      <Droppable droppableId={title} type="task">
+      <Droppable droppableId={title.name} type="note">
         {(provided, snapshot) => (
-          <TaskList
+          <NoteList
             ref={provided.innerRef}
             {...provided.droppableProps}
             isDraggingOver={snapshot.isDraggingOver}
@@ -39,7 +38,7 @@ const Column = ({ title, notes }) => {
               <Note key={note.id} note={note} index={index} />
             ))}
             {provided.placeholder}
-          </TaskList>
+          </NoteList>
         )}
       </Droppable>
     </Container>
