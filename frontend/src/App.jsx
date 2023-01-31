@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import Note from './pages/Note';
 import Register from './pages/Register';
 import Kanban from './pages/Kanban';
+import Test from './pages/Test';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const App = () => {
         </Route>
       </Routes>
     </BrowserRouter>
+    // <Test />
   );
 };
 export default App;

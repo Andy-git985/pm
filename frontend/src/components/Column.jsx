@@ -23,11 +23,11 @@ const NoteList = styled.div`
   min-height: 100px;
 `;
 
-const Column = ({ title, notes }) => {
+const Column = ({ title, notes, type }) => {
   return (
     <Container>
       <Title>{title.name}</Title>
-      <Droppable droppableId={title.name} type="note">
+      <Droppable droppableId={title.name} type={type}>
         {(provided, snapshot) => (
           <NoteList
             ref={provided.innerRef}

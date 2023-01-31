@@ -10,19 +10,11 @@ import AppBarFinal from '../components/AppBarFinal';
 const Container = styled.div`
   display: flex;
 `;
-const ColumnContainer = styled.div`
-  margin: 8px;
-  border: 1px solid lightgrey;
-  background-color: white;
-  border-radius: 2px;
-  width: 220px;
-  display: flex;
-  flex-direction: column;
-`;
 const Kanban = () => {
   const dispatch = useDispatch();
   const notes = useSelector(({ notes }) => notes);
   const filter = useSelector(({ filter }) => filter);
+  console.log(filter);
   const notesByFolder =
     filter.filterBy === 'folder'
       ? notes.filter((note) => note.folder === filter.notes)
@@ -31,44 +23,49 @@ const Kanban = () => {
   const filteredNotes = progress.map((p) =>
     notesByFolder.filter((n) => n.progress === p.value)
   );
+  const dragType = 'progress';
 
-  const [data, setData] = useState(filteredNotes);
+  // const [data, setData] = useState(filteredNotes);
 
   const onDragEnd = (result) => {
-    const { destination, source, draggableId, type } = result;
-    console.log(result);
-    console.log('draggableId', draggableId);
-    console.log(source.droppableId);
-    console.log(source.index);
-    console.log(destination.droppableId);
+    const { destination, draggableId, type } = result;
     if (!destination) return;
-    const newOrder = Array.from(data);
-    console.log(newOrder);
-
-    // const [[reorderedNote]] = newOrder.splice(source.index, 1);
-    // console.log(reorderedNote);
-
-    // newOrder.splice(destination.index, 0, reorderedNote);
-    // setData(newOrder);
-
-    // const newObj = { ...reorderedNote };
-
-    // newObj.progress = progress.find((obj) =>
-    //   Object.values(obj).includes(destination.droppableId)
-    // ).value;
-    // dispatch(updateNote(draggableId, newObj));
-    // return;
+    const newProgress = progress.find((obj) =>
+      Object.values(obj).includes(destination.droppableId)
+    ).value;
+    const updatedField = { [type]: newProgress };
+    dispatch(updateNote(draggableId, updatedField));
   };
   return (
     <>
       <AppBarFinal />
       <DragDropContext onDragEnd={onDragEnd}>
         <Container>
-          {data.map((column, index) => {
-            return <Column title={progress[index]} notes={column} />;
+          {filteredNotes.map((column, index) => {
+            return (
+              <Column
+                key={`${progress[index]}-${index}`}
+                title={progress[index]}
+                notes={column}
+                index={index.toString()}
+                type={dragType}
+              />
+            );
           })}
         </Container>
       </DragDropContext>
+
+      {/* same deal
+      filteredNotes.map(aOfa) => {
+        aOfa.map(a) => {
+          return (
+            // might need to move outer
+            <div class="flex">
+            <Column>
+            </div>
+          )
+        }
+        */}
 
       {/* <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="progress">
