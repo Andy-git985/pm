@@ -26,7 +26,6 @@ const Kanban = () => {
   const dragType = 'progress';
 
   // const [data, setData] = useState(filteredNotes);
-
   const onDragEnd = (result) => {
     const { destination, draggableId, type } = result;
     if (!destination) return;

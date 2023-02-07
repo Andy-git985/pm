@@ -25,6 +25,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getUserDetails, logout } from '../reducers/userReducer';
+import { setFilterBy } from '../reducers/filterReducer';
 
 const AppBarFinal = () => {
   const { userInfo, userToken } = useSelector(({ user }) => user);
@@ -38,6 +39,10 @@ const AppBarFinal = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+  };
+
+  const handleClickAll = () => {
+    dispatch(setFilterBy(null));
   };
 
   // const [filter, setFilter] = useState('');
@@ -166,7 +171,7 @@ const AppBarFinal = () => {
             aria-label="show 4 new mails"
             color="inherit"
           >
-            <Link to="/">
+            <Link to="/" onClick={handleClickAll}>
               <HomeIcon />
             </Link>
           </IconButton>
